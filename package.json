@@ -21,12 +21,13 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.10",
-    "nodemon": "^2.0.15"
-  },
-  "devDependencies": {
+    "nodemon": "^2.0.15",
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.8",
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.11"
+  },
+  "devDependencies": {
+   
   }
 }
