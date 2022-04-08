@@ -24,8 +24,10 @@ morsys.get("/", (req, res) => {
     return res.json({"WELCOME": `to my Backend Software for the Morsys`});
 });
 
+const PORT = process.env.PORT || 4000;
 
-morsys.listen(4000, () => {
+
+morsys.listen(PORT, () => {
     ConnectDB().then(() => {
         console.log("Server is running")
     })
