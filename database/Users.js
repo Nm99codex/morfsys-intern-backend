@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 const UserSchema = new mongoose.Schema(
   {
@@ -22,15 +22,15 @@ const UserSchema = new mongoose.Schema(
   };
 
 
-UserSchema.statics.findByEmailAndUserName = async ({ email, UserName }) => {
-  // check whether email, UserName exists in out database or not
-  const checkUserByEmail = await UserModel.findOne( email );
-  console.log(checkUserByEmail)
-  const checkUserByUserName = await UserModel.findOne({ UserName });
-  console.log(checkUserByUserName)
+UserSchema.statics.findByEmailAndUserName = async ({ email, userName }) => {
+  console.log(email, userName)
+  // check whether email, userName exists in out database or not
+  const checkUserByEmail = await UserModel.findOne(email);
+  console.log(checkUserByEmail.length)
+  const checkUserByuserName = await UserModel.findOne( userName );
+  console.log(checkUserByuserName.length)
 
-
-  if (checkUserByEmail || checkUserByUserName) {
+  if (checkUserByEmail || checkUserByuserName) {
     throw new Error("User already exists!");
   }
 
@@ -38,15 +38,17 @@ UserSchema.statics.findByEmailAndUserName = async ({ email, UserName }) => {
 };
 
 
-UserSchema.statics.findByEmailAndPassword = async ({ email, password }) => {
+UserSchema.statics.findByEmailAndPassword = async ({ email, passWord }) => {
   //check wether email exists
-  const user = await UserModel.findOne({ email });
+  console.log(email,passWord)
+  const user = await UserModel.findOne({email});
+  console.log("User: ",user)
   if (!user) throw new Error("User does nor exist!!!");
 
-  // compare password
-  const doesPasswordMatch = await bcrypt.compare(password, user.password);
+  // compare passWord
+  const doesPassWordMatch = await bcrypt.compare(passWord, user.passWord);
 
-  if (!doesPasswordMatch) throw new Error("invalid password!!!");
+  if (!doesPassWordMatch) throw new Error("invalid passWord!!!");
 
   return user;
 };

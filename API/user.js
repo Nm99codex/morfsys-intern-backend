@@ -1,6 +1,6 @@
 // Library
 import express from "express";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 // Database Model
 import { UserModel } from "../database/Users.js"
@@ -20,13 +20,13 @@ const Router = express.Router();
     const { _id } = req.params;
     console.log(_id)
     const getUser = await UserModel.findById(_id);
-    console.log(getUser)
+    console.log("User Details",getUser)
 
     if (!getUser) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    return res.json({ user:  getUser });
+    return res.status(200).json({ user:  getUser });
    }
    catch(err){
      return res.status(500).json({
@@ -49,9 +49,10 @@ const Router = express.Router();
 Router.put("/update/:userId", async (req, res) => {
   try {
     const { userId } = req.params;
+    const userData = req.body;
+    console.log("User data: ", userData)
+    console.log("User id: ", typeof(userId))
 
-    const { userData } = req.body;
-    console.log(userData)
 
     const updateUserData = await UserModel.findByIdAndUpdate(
       userId,
